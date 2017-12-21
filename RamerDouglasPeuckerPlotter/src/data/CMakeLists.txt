@@ -18,3 +18,7 @@ target_link_libraries( ${PROJECT_NAME} Qt5::Core )
 #add_executable( testPerpindicular test/testPerpindicular.C )
 #target_link_libraries( testPerpindicular ${PROJECT_NAME} Qt5::Test )
 #add_test( testPerpindicular testPerpindicular )
+
+add_executable( testSort test/testSort.C )
+target_link_libraries( testSort ${PROJECT_NAME} Qt5::Test )
+add_test( testSort testSort )

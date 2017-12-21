@@ -20,6 +20,9 @@ namespace Data
       //! \param plotData Plot data used to initialize the class.
       explicit PlotData( const QVector< QPointF >& plotData );
 
+      //! Get the plot data
+      const QVector< QPointF >& data() const { return m_plotData; }
+
       //! Smooth the plot data with Ramer-Douglas-Peucker algorithm
       //!
       //! \param epsilon Dimensional tolerance
