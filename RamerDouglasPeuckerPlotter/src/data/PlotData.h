@@ -16,9 +16,12 @@ namespace Data
     public:
 
       //! Constructor
+      PlotData();
+
+      //! Constructor
       //!
       //! \param plotData Plot data used to initialize the class.
-      explicit PlotData( const QVector< QPointF >& plotData );
+      PlotData( const QVector< QPointF >& plotData );
 
       //! Get the plot data
       const QVector< QPointF >& data() const { return m_plotData; }

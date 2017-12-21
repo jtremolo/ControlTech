@@ -9,6 +9,11 @@ bool qpointLessThan( const QPointF& p1,
 }
 
 
+Data::PlotData::PlotData()
+  : m_plotData()
+{}
+
+
 Data::PlotData::PlotData( const QVector< QPointF >& plotData )
   : m_plotData( plotData )
 {
@@ -24,6 +29,7 @@ bool Data::PlotData::smoothWithRDP( const double epsilon )
 
   m_plotData = douglasPeucker( m_plotData,
                                epsilon );
+
   return true;
 }
 
@@ -67,7 +73,7 @@ QVector< QPointF > Data::PlotData::douglasPeucker( const QVector< QPointF >& plo
                                     epsilon );
 
     //! Build list and return
-    return results1 + results2;
+    return results1.mid( 0, results1.count() - 1 ) + results2;
   }
   else
   {
