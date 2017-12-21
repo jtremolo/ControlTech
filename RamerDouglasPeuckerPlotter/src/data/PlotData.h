@@ -1,8 +1,9 @@
 
 #pragma once
 
+#include <QLine>
 #include <QList>
-#include <QPair>
+#include <QPoint>
 
 
 namespace Data
@@ -11,14 +12,25 @@ namespace Data
   {
     public:
 
+      //! Constructor
+      //!
+      //! \param plotData Plot data used to initialize the class.
+      explicit PlotData( const QList< QPointF >& plotData );
+
+      //! Smooth the plot data with Ramer-Douglas-Peucker algorithm
+      //!
+      //! \param epsilon Dimensional tolerance
+      //! \returns \c true if successful, \c false otherwise.
       bool smoothWithRDP( const double epsilon );
 
 
     private:
 
-      QList< QPair< double, double > > douglasPeucker( const QList< QPair< double, double > >& data,
-                                                       const double                            epsilon ) const;
+      QList< QPointF > douglasPeucker( const QList< QPointF >& data,
+                                       const double            epsilon ) const;
+      double perpindicularDistance( const QLineF&  referenceLine,
+                                    const QPointF& checkPoint ) const;
 
-      QList< QPair< double, double > > m_plotData;
+      QList< QPointF > m_plotData;
   };
 }

@@ -2,6 +2,11 @@
 #include "PlotData.h"
 
 
+Data::PlotData::PlotData( const QList< QPointF >& plotData )
+  : m_plotData( plotData )
+{}
+
+
 bool Data::PlotData::smoothWithRDP( const double epsilon )
 {
   if( m_plotData.length() < 2 )
@@ -13,18 +18,20 @@ bool Data::PlotData::smoothWithRDP( const double epsilon )
 }
 
 
-QList< QPair< double, double > > Data::PlotData::douglasPeucker( const QList< QPair< double, double > >& plotData,
-                                                                 const double                            epsilon ) const
+QList< QPointF > Data::PlotData::douglasPeucker( const QList< QPointF >& plotData,
+                                                 const double            epsilon ) const
 {
   //! Find the point with the maximum distance
+  const QLineF referenceLine( plotData.first(), plotData.back() );
   double dMax = 0.0;
   int maxIndex = 0;
 
   const int iEnd = ( plotData.length() - 1 );
   for( int i = 2; i < iEnd; ++i )
   {
-    //!TODO: Calculate perpindicular distance
-    double curDist;
+    //! Calculate perpindicular distance
+    double curDist = perpindicularDistance( referenceLine,
+                                            plotData[ i ] );
     if( curDist > dMax )
     {
       maxIndex = i;
@@ -46,6 +53,17 @@ QList< QPair< double, double > > Data::PlotData::douglasPeucker( const QList< QP
   }
   else
   {
-    return QList< QPair< double, double > >( { plotData.first(), plotData.back() } );
+    return QList< QPointF >( { plotData.first(), plotData.back() } );
   }
+}
+
+
+double Data::PlotData::perpindicularDistance( const QLineF&  referenceLine,
+                                              const QPointF& checkPoint ) const
+{
+  return std::abs( referenceLine.dy() * checkPoint.x() - 
+                   referenceLine.dx() * checkPoint.y() +
+                   referenceLine.p2().x() * referenceLine.p1().y() -
+                   referenceLine.p2().y() * referenceLine.p1().x() ) /
+         referenceLine.length();
 }
