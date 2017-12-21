@@ -7,6 +7,7 @@ find_package( Qt5Widgets )
 
 set( ${PROJECT_NAME}_SRCS
   main.C
+  PlotWindow.C
 )
 
 

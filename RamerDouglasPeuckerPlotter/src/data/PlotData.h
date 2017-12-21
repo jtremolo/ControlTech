@@ -2,12 +2,15 @@
 #pragma once
 
 #include <QLine>
-#include <QList>
+#include <QVector>
 #include <QPoint>
 
 
 namespace Data
 {
+  //! Represents a continuous ordered dataset.
+  //! If data is unordered, it will be sorted by
+  //! x value.
   class PlotData
   {
     public:
@@ -15,7 +18,7 @@ namespace Data
       //! Constructor
       //!
       //! \param plotData Plot data used to initialize the class.
-      explicit PlotData( const QList< QPointF >& plotData );
+      explicit PlotData( const QVector< QPointF >& plotData );
 
       //! Smooth the plot data with Ramer-Douglas-Peucker algorithm
       //!
@@ -26,11 +29,14 @@ namespace Data
 
     private:
 
-      QList< QPointF > douglasPeucker( const QList< QPointF >& data,
-                                       const double            epsilon ) const;
+      void sortData();
+
+      QVector< QPointF > douglasPeucker( const QVector< QPointF >& data,
+                                         const double            epsilon ) const;
+
       double perpindicularDistance( const QLineF&  referenceLine,
                                     const QPointF& checkPoint ) const;
 
-      QList< QPointF > m_plotData;
+      QVector< QPointF > m_plotData;
   };
 }

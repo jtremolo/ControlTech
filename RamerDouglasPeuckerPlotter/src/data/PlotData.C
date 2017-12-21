@@ -2,9 +2,19 @@
 #include "PlotData.h"
 
 
-Data::PlotData::PlotData( const QList< QPointF >& plotData )
+bool qpointLessThan( const QPointF& p1,
+                     const QPointF& p2 )
+{
+  return ( p1.x() < p2.x() );
+}
+
+
+Data::PlotData::PlotData( const QVector< QPointF >& plotData )
   : m_plotData( plotData )
-{}
+{
+  //! Ensure data is sequential
+  sortData();
+}
 
 
 bool Data::PlotData::smoothWithRDP( const double epsilon )
@@ -18,8 +28,16 @@ bool Data::PlotData::smoothWithRDP( const double epsilon )
 }
 
 
-QList< QPointF > Data::PlotData::douglasPeucker( const QList< QPointF >& plotData,
-                                                 const double            epsilon ) const
+void Data::PlotData::sortData()
+{
+  std::sort( m_plotData.begin(),
+             m_plotData.end(),
+             qpointLessThan );
+}
+
+
+QVector< QPointF > Data::PlotData::douglasPeucker( const QVector< QPointF >& plotData,
+                                                   const double            epsilon ) const
 {
   //! Find the point with the maximum distance
   const QLineF referenceLine( plotData.first(), plotData.back() );
@@ -53,7 +71,7 @@ QList< QPointF > Data::PlotData::douglasPeucker( const QList< QPointF >& plotDat
   }
   else
   {
-    return QList< QPointF >( { plotData.first(), plotData.back() } );
+    return QVector< QPointF >( { plotData.first(), plotData.back() } );
   }
 }
 
