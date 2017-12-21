@@ -1,1 +1,0 @@
-set(AM_OLD_COMPILE_SETTINGS "QT_CORE_LIB;QT_NO_DEBUG ~~~ /home/jthistle/Documents/ControlTech/RamerDouglasPeuckerPlotter/build/data;/home/jthistle/Documents/ControlTech/RamerDouglasPeuckerPlotter/src/data;/opt/Qt/5.9.2/gcc_64/include;/opt/Qt/5.9.2/gcc_64/include/QtCore;/opt/Qt/5.9.2/gcc_64/./mkspecs/linux-g++ ~~~  ~~~ FALSE ~~~ ")

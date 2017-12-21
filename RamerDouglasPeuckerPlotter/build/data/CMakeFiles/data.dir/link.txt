@@ -1,2 +1,0 @@
-/usr/bin/ar qc libdata.a  CMakeFiles/data.dir/PlotData.C.o CMakeFiles/data.dir/data_automoc.cpp.o
-/usr/bin/ranlib libdata.a
