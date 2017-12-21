@@ -97,6 +97,9 @@ void UI::PlotWindow::animateStep()
 
 void UI::PlotWindow::initialize()
 {
+  //! Set main window title
+  setWindowTitle( tr( "Ramer-Douglas-Peucker Algorithm" ) );
+
   //! Create main layout
   QVBoxLayout* mainVBox = new QVBoxLayout();
 
@@ -117,17 +120,15 @@ void UI::PlotWindow::initialize()
   QHBoxLayout* epsilonLayout = new QHBoxLayout();
   epsilonLayout->addWidget( m_epsilonLabel );
   epsilonLayout->addWidget( m_epsilonSpinBox );
-  epsilonLayout->addStretch( 1 );
-  mainVBox->addLayout( epsilonLayout );
 
   //! Add animate button
   m_animateButton = new QPushButton( tr( "Start Animation" ) );
   m_animateButton->setEnabled( false );
 
-  QHBoxLayout* animateLayout = new QHBoxLayout();
-  animateLayout->addWidget( m_animateButton );
-  animateLayout->addStretch( 1 );
-  mainVBox->addLayout( animateLayout );
+  epsilonLayout->addSpacing( 25 );
+  epsilonLayout->addWidget( m_animateButton );
+  epsilonLayout->addStretch( 1 );
+  mainVBox->addLayout( epsilonLayout );
 
   //! Create chart
   m_chart = new QChart();
@@ -181,6 +182,7 @@ bool UI::PlotWindow::loadFile( const QString& filePath )
 
 bool UI::PlotWindow::readCSVFile( const QString& filePath )
 {
+  //! Open file
   QFile file( filePath );
   if( !file.open( QIODevice::ReadOnly | QIODevice::Text ) )
   {
@@ -188,6 +190,7 @@ bool UI::PlotWindow::readCSVFile( const QString& filePath )
     return false;
   }
 
+  //! Load each line and check value count
   QVector< QPointF > loadedPoints;
   while( !file.atEnd() )
   {
@@ -200,6 +203,7 @@ bool UI::PlotWindow::readCSVFile( const QString& filePath )
                                   parts[ 1 ].toDouble() ) );
   }
 
+  //! Close file and set points
   file.close();
   m_plotData = Data::PlotData( loadedPoints );
   return true;
@@ -208,6 +212,7 @@ bool UI::PlotWindow::readCSVFile( const QString& filePath )
 
 void UI::PlotWindow::stopAnimation()
 {
+  //! Stop timer, if running
   if( m_animationTimer != nullptr )
   {
     m_animationTimer->stop();
@@ -215,6 +220,7 @@ void UI::PlotWindow::stopAnimation()
     m_animationTimer = nullptr;
   }
 
+  //! Reset button text
   m_animateButton->setText( tr( "Start Animation" ) );
 }
 
@@ -230,6 +236,6 @@ void UI::PlotWindow::startAnimation()
            this,             &PlotWindow::animateStep );
   m_animationTimer->start( 100 );
 
-  //! Change button text
+  //! Reset button text
   m_animateButton->setText( tr( "Stop Animation" ) );
 }
