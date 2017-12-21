@@ -15,6 +15,7 @@ class TestSort : public QObject
 
 void TestSort::testUnordered()
 {
+  //! Test the auto-sorting of unordered data
   QVector< QPointF > testData( { { 2.0, 1.0 }, { 1.0, 5.0 }, { 0.0, 0.0 }, { 10.0, -5.0 } } );
   Data::PlotData plotData( testData );
 
